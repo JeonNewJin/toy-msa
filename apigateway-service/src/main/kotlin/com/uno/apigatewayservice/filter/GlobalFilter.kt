@@ -20,12 +20,12 @@ class GlobalFilter : AbstractGatewayFilterFactory<GlobalFilter.Config>(Config::c
         log.info("Global Filter baseMessage: {}, {}", config.baseMessage, request.remoteAddress)
 
         if (config.preLogger) {
-            log.info("Global Filter Start: - request id: {}", request.id)
+            log.info("Global Filter Start - request id: {}", request.id)
         }
 
         chain.filter(exchange).then(Mono.fromRunnable {
             if (config.postLogger) {
-                log.info("Global Filter End: - response code: {}", response.statusCode)
+                log.info("Global Filter End - response code: {}", response.statusCode)
             }
         })
     }
