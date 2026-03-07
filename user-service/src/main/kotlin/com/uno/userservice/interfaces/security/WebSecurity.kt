@@ -1,0 +1,26 @@
+package com.uno.userservice.interfaces.security
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+
+@Configuration
+@EnableWebSecurity
+class WebSecurity {
+    @Bean
+    fun configure(http: HttpSecurity): SecurityFilterChain =
+        http
+            .csrf { it.disable() }
+            .authorizeHttpRequests {
+                it.requestMatchers(
+                    "/user-service/**",
+                    "/h2-console/**"
+                )
+                    .permitAll()
+                    .anyRequest().authenticated()
+            }
+            .headers { it.frameOptions { frame -> frame.disable() } }
+            .build()
+}

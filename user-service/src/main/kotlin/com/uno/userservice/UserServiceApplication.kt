@@ -1,11 +1,11 @@
-package com.uno.secondservice
+package com.uno.userservice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class FirstServiceApplication
+class UserServiceApplication
 
 fun main(args: Array<String>) {
-    runApplication<FirstServiceApplication>(*args)
+    runApplication<UserServiceApplication>(*args)
 }

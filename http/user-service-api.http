@@ -1,0 +1,18 @@
+###
+GET {{toy-msa-api}}/user-service/health-check
+
+###
+GET {{toy-msa-api}}/user-service/welcome
+
+###
+POST {{toy-msa-api}}/user-service/users
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "name": "test-user",
+  "password": "secure-password"
+}
+
+###
+GET {{toy-msa-api}}/user-service/users/1
