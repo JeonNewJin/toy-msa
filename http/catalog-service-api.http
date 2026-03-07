@@ -1,0 +1,5 @@
+###
+GET {{toy-msa-api}}/catalog-service/health-check
+
+###
+GET {{toy-msa-api}}/catalog-service/catalogs

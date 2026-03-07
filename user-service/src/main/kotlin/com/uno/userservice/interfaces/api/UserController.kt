@@ -47,5 +47,5 @@ class UserController(
         @PathVariable userId: Long
     ): ResponseEntity<UserResponse> =
         userService.findById(userId)
-            .let { ResponseEntity.ok().body(UserResponse.from(it)) }
+            .let { ResponseEntity.ok(UserResponse.from(it)) }
 }
