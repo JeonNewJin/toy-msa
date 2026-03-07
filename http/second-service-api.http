@@ -1,0 +1,2 @@
+GET {{toy-msa-api}}/second-service/message
+second-request: 2nd-request-header
