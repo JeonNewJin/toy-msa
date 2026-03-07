@@ -1,4 +1,4 @@
-package com.uno.servicediscovery
+package com.uno.apigatewayservice
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
