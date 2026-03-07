@@ -5,6 +5,7 @@ include(
     ":apigateway-service",
     ":user-service",
     ":catalog-service",
+    ":order-service",
     ":first-service",
     ":second-service",
 )

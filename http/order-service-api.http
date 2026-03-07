@@ -1,0 +1,37 @@
+###
+GET {{toy-msa-api}}/order-service/health-check
+
+###
+POST {{toy-msa-api}}/user-service/users
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "name": "test-user",
+  "password": "secure-password"
+}
+
+###
+POST {{toy-msa-api}}/order-service/orders
+Content-Type: application/json
+
+{
+  "productId": "CATALOG-001",
+  "quantity": 10,
+  "unitPrice": 1500,
+  "userId": "d0154dee-c461-40f6-bb4e-90d8fd5a421f"
+}
+
+###
+POST {{toy-msa-api}}/order-service/orders
+Content-Type: application/json
+
+{
+  "productId": "CATALOG-002",
+  "quantity": 20,
+  "unitPrice": 1000,
+  "userId": "d0154dee-c461-40f6-bb4e-90d8fd5a421f"
+}
+
+###
+GET {{toy-msa-api}}/order-service/orders?userId=d0154dee-c461-40f6-bb4e-90d8fd5a421f

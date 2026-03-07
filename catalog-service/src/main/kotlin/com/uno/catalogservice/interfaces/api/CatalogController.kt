@@ -1,6 +1,5 @@
 package com.uno.catalogservice.interfaces.api
 
-import com.uno.catalogservice.domain.Catalog
 import com.uno.catalogservice.domain.CatalogService
 import org.springframework.core.env.Environment
 import org.springframework.http.ResponseEntity
