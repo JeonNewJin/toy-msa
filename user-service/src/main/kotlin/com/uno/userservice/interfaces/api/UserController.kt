@@ -21,8 +21,8 @@ class UserController(
                     + ", port(server.port)=" + env.getProperty("server.port")
                     + ", welcome message=" + env.getProperty("greeting.message")
                     + ", gateway ip(env)=" + env.getProperty("gateway.ip")
-                    + ", token secret=" + env.getProperty("jwt.secret")
-                    + ", token expiration time=" + env.getProperty("jwt.expiration")
+                    + ", token secret=" + env.getProperty("token.secret")
+                    + ", token expiration time=" + env.getProperty("token.expiration_time")
         )
 
     @GetMapping("/welcome")

@@ -4,21 +4,18 @@ server:
 spring:
   application:
     name: user-service
-  profiles:
-    active: dev
-#  config:
-#    import: "optional:configserver:http://localhost:8888"
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+#  profiles:
+#    active: dev
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecommerce
+    username: application
+    password: application
   jpa:
     open-in-view: false
     show-sql: true
@@ -37,10 +34,6 @@ eureka:
 greeting:
   message: Welcome to the Simple E-commerce.
 
-#jwt:
-#  secret: my-very-long-secret-key-must-be-at-least-32-bytes-long
-#  expiration: 86400000 #10 days
-
 management:
   endpoints:
     web:
@@ -50,3 +43,4 @@ management:
           - health
           - beans
           - info
+          - busrefresh

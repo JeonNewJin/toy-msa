@@ -1,2 +1,6 @@
 ###
 GET http://localhost:8000/actuator/httpexchanges
+
+###
+GET {{toy-msa-api}}/user-service/health-check
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4ZTQ1ZWQ0MC1jMTQzLTRhNjctOWI4Yy03YzI5YTBiNzZmYmIiLCJpYXQiOjE3NzI5ODE0OTgsImV4cCI6MTc3MzA2Nzg5OH0.K3HT8kdREvpsvioyBPgebtJZ7rHqrk2S8EAoLJtgprSqRhghASm6vhn7CswP-16f_3sgiM2dPcQvYyCfSJILuA

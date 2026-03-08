@@ -11,6 +11,6 @@ dependencies {
     // Spring Cloud
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
-    // H2
-    runtimeOnly("com.h2database:h2")
+    // MySQL
+    runtimeOnly("com.mysql:mysql-connector-j")
 }

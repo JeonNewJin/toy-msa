@@ -6,7 +6,7 @@ GET http://localhost:60000/health-check
 GET http://localhost:60000/actuator
 
 ###
-POST http://localhost:60000/actuator/refresh
+POST http://localhost:60000/actuator/busrefresh
 
 ###
 #GET {{toy-msa-api}}/user-service/welcome

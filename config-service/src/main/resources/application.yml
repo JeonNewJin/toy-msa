@@ -4,9 +4,14 @@ server:
 spring:
   application:
     name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   profiles:
-    active: git
-#    active: native
+#    active: git
+    active: native
   cloud:
     config:
       server:
@@ -17,3 +22,11 @@ spring:
           default-label: master
 #          username: [username]
 #          password: [password]
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - busrefresh
