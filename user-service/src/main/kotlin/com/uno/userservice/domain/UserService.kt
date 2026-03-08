@@ -8,7 +8,8 @@ import java.util.*
 @Service
 class UserService(
     private val passwordEncoder: PasswordEncoder,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val OrderServiceClient: OrderServiceClient
 ) {
     @Transactional
     fun create(command: UserCommand.Create): UserInfo {
@@ -22,8 +23,12 @@ class UserService(
         return UserInfo.from(user)
     }
 
-    fun findById(id: Long): UserInfo =
-        userRepository.findById(id)
-            ?.let { UserInfo.from(it) }
-            ?: throw IllegalArgumentException("User Not Found")
+    fun findById(id: Long): UserInfo {
+        val user = userRepository.findById(id)
+            ?: throw IllegalArgumentException("User with id $id not found")
+
+        val orders = OrderServiceClient.getOrders(user.userId)
+
+        return UserInfo.from(user, orders);
+    }
 }

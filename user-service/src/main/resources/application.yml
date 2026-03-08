@@ -4,11 +4,19 @@ server:
 spring:
   application:
     name: user-service
+  config:
+    import: optional:configserver:http://127.0.0.1:8888
+  cloud:
+    config:
+      name: ecommerce, user-service
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
+  web:
+    error:
+      include-message: always
 #  profiles:
 #    active: dev
   datasource:
@@ -20,7 +28,8 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+#      ddl-auto: create
+      ddl-auto: none
 
 eureka:
   instance:
@@ -44,3 +53,8 @@ management:
           - beans
           - info
           - busrefresh
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.uno.userservice.infrastructure.client: DEBUG

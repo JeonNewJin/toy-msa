@@ -19,7 +19,7 @@ Content-Type: application/json
   "productId": "CATALOG-001",
   "quantity": 10,
   "unitPrice": 1500,
-  "userId": "d0154dee-c461-40f6-bb4e-90d8fd5a421f"
+  "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
 }
 
 ###
@@ -30,8 +30,8 @@ Content-Type: application/json
   "productId": "CATALOG-002",
   "quantity": 20,
   "unitPrice": 1000,
-  "userId": "d0154dee-c461-40f6-bb4e-90d8fd5a421f"
+  "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
 }
 
 ###
-GET {{toy-msa-api}}/order-service/orders?userId=d0154dee-c461-40f6-bb4e-90d8fd5a421f
+GET {{toy-msa-api}}/order-service/orders?userId=9c2017e0-bee1-485f-96c8-eaea9cb2d394

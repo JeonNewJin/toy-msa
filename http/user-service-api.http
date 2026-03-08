@@ -6,7 +6,8 @@ GET http://localhost:60000/health-check
 GET http://localhost:60000/actuator
 
 ###
-POST http://localhost:60000/actuator/busrefresh
+#POST http://localhost:60000/actuator/busrefresh
+POST {{toy-msa-api}}/user-service/actuator/busrefresh
 
 ###
 #GET {{toy-msa-api}}/user-service/welcome
@@ -14,7 +15,6 @@ GET http://localhost:60000/welcome
 
 ###
 POST {{toy-msa-api}}/user-service/users
-#POST http://localhost:60000/user-service/users
 Content-Type: application/json
 
 {
@@ -25,7 +25,6 @@ Content-Type: application/json
 
 ###
 POST {{toy-msa-api}}/user-service/login
-#POST http://localhost:60000/user-service/login
 Content-Type: application/json
 
 {
@@ -35,4 +34,4 @@ Content-Type: application/json
 
 ###
 GET {{toy-msa-api}}/user-service/users/1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI3NmM4NDU2Yy05ZWMzLTRiZWQtYTM0ZC0xZTBhY2FkMTk2ZTEiLCJpYXQiOjE3NzI5NzY4MzEsImV4cCI6MTc3MzA2MzIzMX0.hzJQZl_pp6qpJxdz1H42aThgxjnBHhPCwikJAw-4q2iviMS_h3u1oPEYX97VjyP2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5YzIwMTdlMC1iZWUxLTQ4NWYtOTZjOC1lYWVhOWNiMmQzOTQiLCJpYXQiOjE3NzI5ODU5NjgsImV4cCI6MTc3MzA3MjM2OH0.cCUUbBZUIkMG0L-v-Df4eQPKoD5HVwX4kMxTtdmCyDGOFZVUSRbpYpmKVn_xFf7R9xi633c1YiCwlj4LUkY-KQ

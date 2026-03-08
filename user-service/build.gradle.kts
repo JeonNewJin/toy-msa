@@ -15,6 +15,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
     implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
