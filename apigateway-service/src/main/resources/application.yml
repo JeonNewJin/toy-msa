@@ -25,7 +25,28 @@ spring:
             - id: user-service
               uri: lb://USER-SERVICE
               predicates:
+                - Path=/user-service/login
+                - Method=POST
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user-service/users
+                - Method=POST
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
                 - Path=/user-service/**
+                - Method=GET
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+                - AuthorizationHeaderFilter
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:
@@ -39,19 +60,22 @@ spring:
               predicates:
                 - Path=/first-service/**
               filters:
-#                - AddRequestHeader=first-request, 1st-request-header
-#                - AddResponseHeader=first-response, 1st-response-header
+                #                - AddRequestHeader=first-request, 1st-request-header
+                #                - AddResponseHeader=first-response, 1st-response-header
                 - CustomFilter
             - id: second-service
               uri: lb://SECOND-SERVICE
               predicates:
                 - Path=/second-service/**
               filters:
-#                - AddRequestHeader=second-request, 2nd-request-header
-#                - AddResponseHeader=second-response, 2nd-response-header
+                #                - AddRequestHeader=second-request, 2nd-request-header
+                #                - AddResponseHeader=second-response, 2nd-response-header
                 - name: CustomFilter
                 - name: LoggingFilter
                   args:
                     baseMessage: Hi, there.
                     preLogger: true
                     postLogger: true
+
+jwt:
+  secret: user-service-jwt-secret-key-must-be-at-least-32-bytes-long

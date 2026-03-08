@@ -32,3 +32,7 @@ eureka:
 
 greeting:
   message: Welcome to the Simple E-commerce.
+
+jwt:
+  secret: user-service-jwt-secret-key-must-be-at-least-32-bytes-long
+  expiration: 86400000

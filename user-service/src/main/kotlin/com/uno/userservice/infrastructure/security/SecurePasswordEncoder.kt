@@ -5,8 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
-class SecurePasswordEncoder : PasswordEncoder {
-    private val bCryptPasswordEncoder = BCryptPasswordEncoder()
-
+class SecurePasswordEncoder(
+    private val bCryptPasswordEncoder: BCryptPasswordEncoder,
+) : PasswordEncoder {
     override fun encode(password: String): String = bCryptPasswordEncoder.encode(password)!!
 }
