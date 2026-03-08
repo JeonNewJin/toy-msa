@@ -1,8 +1,16 @@
 ###
-GET {{toy-msa-api}}/user-service/health-check
+#GET {{toy-msa-api}}/user-service/health-check
+GET http://localhost:60000/health-check
 
 ###
-GET {{toy-msa-api}}/user-service/welcome
+GET http://localhost:60000/actuator
+
+###
+POST http://localhost:60000/actuator/refresh
+
+###
+#GET {{toy-msa-api}}/user-service/welcome
+GET http://localhost:60000/welcome
 
 ###
 POST {{toy-msa-api}}/user-service/users
@@ -27,4 +35,4 @@ Content-Type: application/json
 
 ###
 GET {{toy-msa-api}}/user-service/users/1
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI3ZGI5NTg2Zi1hMWY3LTRhYTktYjExYy1mMDU4NmQzYTIzYjciLCJpYXQiOjE3NzI5NDgxNjAsImV4cCI6MTc3MzAzNDU2MH0.4bHs-zGFofdUNDfT2EmYzPax9vB1oDzVrfNSi--w0YJ6h3HgiXAuRkNAmyUcG--B
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI3NmM4NDU2Yy05ZWMzLTRiZWQtYTM0ZC0xZTBhY2FkMTk2ZTEiLCJpYXQiOjE3NzI5NzY4MzEsImV4cCI6MTc3MzA2MzIzMX0.hzJQZl_pp6qpJxdz1H42aThgxjnBHhPCwikJAw-4q2iviMS_h3u1oPEYX97VjyP2

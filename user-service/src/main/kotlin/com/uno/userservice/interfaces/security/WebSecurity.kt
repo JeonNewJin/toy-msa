@@ -43,22 +43,17 @@ class WebSecurity(
         return http
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers(
-                    "/users/**",
-                    "/login",
-                    "/health-check",
-                    "/welcome",
-                    "/h2-console/**"
-                )
-                    .access { _, context: RequestAuthorizationContext ->
+                it.requestMatchers("/actuator/**", "/health-check", "/welcome", "/h2-console/**")
+                    .permitAll()
+                    .anyRequest()
+                    .access { _, context ->
                         val request = context.request
                         AuthorizationDecision(
                             IpAddressMatcher("127.0.0.1").matches(request) ||
                             IpAddressMatcher("::1").matches(request) ||
-                            IpAddressMatcher("192.168.0.44").matches(request)
+                            IpAddressMatcher("222.237.213.201").matches(request)
                         )
                     }
-                    .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilter(authFilter)

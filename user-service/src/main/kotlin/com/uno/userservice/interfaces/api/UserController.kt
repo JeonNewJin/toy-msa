@@ -19,6 +19,10 @@ class UserController(
             "It's Working in User Service"
                     + ", port(local.server.port)=" + env.getProperty("local.server.port")
                     + ", port(server.port)=" + env.getProperty("server.port")
+                    + ", welcome message=" + env.getProperty("greeting.message")
+                    + ", gateway ip(env)=" + env.getProperty("gateway.ip")
+                    + ", token secret=" + env.getProperty("jwt.secret")
+                    + ", token expiration time=" + env.getProperty("jwt.expiration")
         )
 
     @GetMapping("/welcome")

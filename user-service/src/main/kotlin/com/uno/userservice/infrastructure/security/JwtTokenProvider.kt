@@ -8,8 +8,8 @@ import java.util.*
 
 @Component
 class JwtTokenProvider(
-    @Value($$"${jwt.secret}") private val secret: String,
-    @Value($$"${jwt.expiration}") private val expiration: Long,
+    @Value($$"${token.secret}") private val secret: String,
+    @Value($$"${token.expiration_time}") private val expiration: Long,
 ) {
     private val key = Keys.hmacShaKeyFor(secret.toByteArray())
 
