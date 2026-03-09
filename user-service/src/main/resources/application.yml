@@ -17,8 +17,8 @@ spring:
   web:
     error:
       include-message: always
-#  profiles:
-#    active: dev
+  #  profiles:
+  #    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ecommerce
@@ -28,8 +28,8 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-#      ddl-auto: create
-      ddl-auto: none
+      ddl-auto: create
+#      ddl-auto: none
 
 eureka:
   instance:
@@ -40,8 +40,57 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
-greeting:
-  message: Welcome to the Simple E-commerce.
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-type: COUNT_BASED # 슬라이딩 윈도우 유형 (COUNT_BASED=호출 개수 기준, TIME_BASED=시간 기준)
+        # 최근 10건을 관찰하지만, 3건 이상이 쌓인 시점부터 임계치 판정을 시작
+        # 1~2건: 상태 판정 안 함, 3~10건: 판정 함, 11건 이후: 계속 최근 10건으로 판정
+        sliding-window-size: 10 # 슬라이딩 윈도우 크기
+        minimum-number-of-calls: 3 # 최소 호출 수
+        failure-rate-threshold: 50 # 실패율이 50% 넘으면 Open
+        wait-duration-in-open-state: 2s # Open 상태 유지 시간
+        slow-call-duration-threshold: 200ms # 느린 호출로 간주되는 시간 (2초)
+        slow-call-rate-threshold: 50 # 느린 호출 비율이 50% 넘으면 Open
+        permitted-number-of-calls-in-half-open-state: 1 # Half-Open 상태에서 허용되는 호출 수
+        max-wait-duration-in-half-open-state: 1s # Half-Open 상태에서 최대 대기 시간
+    instances:
+      order-service:
+        base-config: default
+
+  retry:
+    configs:
+      default:
+        max-attempts: 3 # 최초 호출을 포함해 최대 3번까지 재시도 수행
+        wait-duration: 100ms # 재시도 사이에 기본적으로 대기하는 시간
+        enable-exponential-backoff: true # 재시도 간 대기 시간을 지수적으로 증가시키는 백오프 전략 활성화
+        exponential-backoff-multiplier: 2 # 백오프 배수 (100ms → 200ms → 400ms로 증가)
+        retry-exceptions: # 이 예외가 발생하면 일시적 오류로 판단하고 재시도 수행
+          - feign.RetryableException
+          - feign.FeignException.InternalServerError
+          - feign.FeignException.ServiceUnavailable
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.io.IOException
+        ignore-exceptions: # 이 예외가 발생하면 재시도하지 않고 즉시 실패 처리
+          - feign.FeignException.BadRequest # 400 요청 오류는 클라이언트 문제로 판단하여 재시도 제외
+        fail-after-max-attempts: true # 최대 재시도 횟수까지 실패하면 마지막 예외를 그대로 발생시킴
+    instances:
+      order-service:
+        base-config: default
+
+  bulkhead:
+    instances:
+      order-service:
+        max-concurrent-calls: 20 # 동시에 실행 가능한 order-service 호출 수 제한
+        max-wait-duration: 0ms # 동시 호출 제한 초과 시 대기하지 않고 즉시 BulkheadFullException 발생
+
+  timelimiter:
+    instances:
+      order-service:
+        timeout-duration: 2s # 호출 작업이 2초 안에 완료되지 않으면 TimeoutException 발생
+        cancel-running-future: false # timeout 발생 시 실행 중인 비동기 작업을 강제로 취소하지 않음
 
 management:
   endpoints:
@@ -53,8 +102,14 @@ management:
           - beans
           - info
           - busrefresh
+          - circuitbreakers
+          - circuitbreakerevents
+
+greeting:
+  message: Welcome to the Simple E-commerce.
 
 logging:
   level:
     org.springframework.security: DEBUG
     com.uno.userservice.infrastructure.client: DEBUG
+    io.github.resilience4j: DEBUG

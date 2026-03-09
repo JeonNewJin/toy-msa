@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @FeignClient("order-service")
 interface OrderServiceFeignClient {
 
-    @GetMapping("/order-service/orders-ng")
+    @GetMapping("/order-service/orders")
     fun getOrders(@RequestParam userId: String): List<Response>
 
     data class Response(

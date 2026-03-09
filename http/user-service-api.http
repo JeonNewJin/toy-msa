@@ -13,7 +13,7 @@ POST {{toy-msa-api}}/user-service/actuator/busrefresh
 #GET {{toy-msa-api}}/user-service/welcome
 GET http://localhost:60000/welcome
 
-###
+### 회원가입
 POST {{toy-msa-api}}/user-service/users
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
   "password": "secure-password"
 }
 
-###
+### 로그인
 POST {{toy-msa-api}}/user-service/login
 Content-Type: application/json
 
@@ -32,6 +32,9 @@ Content-Type: application/json
 "password": "secure-password"
 }
 
-###
+### 사용자 조회
 GET {{toy-msa-api}}/user-service/users/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5YzIwMTdlMC1iZWUxLTQ4NWYtOTZjOC1lYWVhOWNiMmQzOTQiLCJpYXQiOjE3NzI5ODU5NjgsImV4cCI6MTc3MzA3MjM2OH0.cCUUbBZUIkMG0L-v-Df4eQPKoD5HVwX4kMxTtdmCyDGOFZVUSRbpYpmKVn_xFf7R9xi633c1YiCwlj4LUkY-KQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTljNzcxYS1mMGY3LTRhYmUtYTFiZS1lMTJiNDQ5MDJmMzMiLCJpYXQiOjE3NzMwNzk5NjcsImV4cCI6MTc3MzE2NjM2N30.J_er4fqVa3CZ0aSIQs3kMEzPXOJQurpcU4hd1qsbVh5Y8AChk5Bszcs8K7934DE2ZHZ50lRNNhKdqc2HSTutzA
+
+### 서킷브레이커 상태 확인
+GET http://localhost:60000/actuator/circuitbreakers
