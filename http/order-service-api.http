@@ -1,7 +1,7 @@
 ###
 GET {{toy-msa-api}}/order-service/health-check
 
-###
+### 회원가입
 POST {{toy-msa-api}}/user-service/users
 Content-Type: application/json
 
@@ -11,7 +11,7 @@ Content-Type: application/json
   "password": "secure-password"
 }
 
-###
+### 주문 생성
 POST {{toy-msa-api}}/order-service/orders
 Content-Type: application/json
 
@@ -22,7 +22,7 @@ Content-Type: application/json
   "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
 }
 
-###
+### 주문 생성
 POST {{toy-msa-api}}/order-service/orders
 Content-Type: application/json
 
@@ -33,5 +33,5 @@ Content-Type: application/json
   "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
 }
 
-###
+### 주문 내역 조회
 GET {{toy-msa-api}}/order-service/orders?userId=9c2017e0-bee1-485f-96c8-eaea9cb2d394

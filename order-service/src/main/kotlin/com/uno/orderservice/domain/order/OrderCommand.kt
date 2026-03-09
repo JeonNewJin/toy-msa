@@ -1,4 +1,4 @@
-package com.uno.orderservice.domain
+package com.uno.orderservice.domain.order
 
 class OrderCommand {
     data class Create(

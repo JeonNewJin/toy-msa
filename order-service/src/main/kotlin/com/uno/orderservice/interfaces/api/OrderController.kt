@@ -1,6 +1,6 @@
 package com.uno.orderservice.interfaces.api
 
-import com.uno.orderservice.domain.OrderService
+import com.uno.orderservice.domain.order.OrderService
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.ResponseEntity

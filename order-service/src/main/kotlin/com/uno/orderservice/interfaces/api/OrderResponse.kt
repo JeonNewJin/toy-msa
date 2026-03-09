@@ -1,6 +1,6 @@
 package com.uno.orderservice.interfaces.api
 
-import com.uno.orderservice.domain.OrderInfo
+import com.uno.orderservice.domain.order.OrderInfo
 
 data class OrderResponse(
     val orderId: String,

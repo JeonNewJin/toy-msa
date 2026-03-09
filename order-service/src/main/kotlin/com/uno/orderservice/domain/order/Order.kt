@@ -1,4 +1,4 @@
-package com.uno.orderservice.domain
+package com.uno.orderservice.domain.order
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

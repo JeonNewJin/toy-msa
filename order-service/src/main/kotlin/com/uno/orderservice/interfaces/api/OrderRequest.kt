@@ -1,6 +1,6 @@
 package com.uno.orderservice.interfaces.api
 
-import com.uno.orderservice.domain.OrderCommand
+import com.uno.orderservice.domain.order.OrderCommand
 
 class OrderRequest {
     data class Create(

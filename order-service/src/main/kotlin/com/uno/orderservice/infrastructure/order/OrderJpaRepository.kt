@@ -1,6 +1,6 @@
-package com.uno.orderservice.infrastructure
+package com.uno.orderservice.infrastructure.order
 
-import com.uno.orderservice.domain.Order
+import com.uno.orderservice.domain.order.Order
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface OrderJpaRepository : JpaRepository<Order, Int> {

@@ -1,5 +1,6 @@
-package com.uno.orderservice.domain
+package com.uno.orderservice.domain.order
 
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -7,7 +8,8 @@ import java.util.*
 @Transactional(readOnly = true)
 @Service
 class OrderService(
-    val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
     @Transactional
     fun create(command: OrderCommand.Create): OrderInfo {
@@ -20,13 +22,16 @@ class OrderService(
             userId = command.userId,
         )
         orderRepository.save(order)
+
+        applicationEventPublisher.publishEvent(OrderEvent.Created.from(order))
+
         return OrderInfo.from(order)
     }
 
     fun findByOrderId(orderId: String): OrderInfo =
         orderRepository.findByOrderId(orderId)
             ?.let { OrderInfo.from(it) }
-            ?: throw IllegalArgumentException("Order with id $orderId not found")
+            ?: throw IllegalArgumentException("[orderId = $orderId] 주문을 찾을 수 없습니다.")
 
     fun findAllByUserId(userId: String): List<OrderInfo> =
         orderRepository.findAllByUserId(userId)

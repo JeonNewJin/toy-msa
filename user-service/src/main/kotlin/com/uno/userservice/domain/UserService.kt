@@ -25,7 +25,7 @@ class UserService(
 
     fun findById(id: Long): UserInfo {
         val user = userRepository.findById(id)
-            ?: throw IllegalArgumentException("User with id $id not found")
+            ?: throw IllegalArgumentException("[id = $id] 사용자를 찾을 수 없습니다.")
 
         val orders = OrderServiceClient.getOrders(user.userId)
 

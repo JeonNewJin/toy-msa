@@ -1,7 +1,7 @@
-package com.uno.orderservice.infrastructure
+package com.uno.orderservice.infrastructure.order
 
-import com.uno.orderservice.domain.Order
-import com.uno.orderservice.domain.OrderRepository
+import com.uno.orderservice.domain.order.Order
+import com.uno.orderservice.domain.order.OrderRepository
 import org.springframework.stereotype.Component
 
 @Component
