@@ -1,26 +1,42 @@
+import org.gradle.api.Project.DEFAULT_VERSION
+import org.gradle.kotlin.dsl.withType
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+/** --- configuration functions --- */
+fun getGitHash(): String = runCatching {
+    providers.exec {
+        commandLine("git", "rev-parse", "--short", "HEAD")
+    }.standardOutput.asText.get().trim()
+}.getOrElse { "init" }
+
+/** --- project configurations --- */
 plugins {
-    kotlin("jvm") version "2.3.10"
-    kotlin("kapt") version "2.3.10"
-    kotlin("plugin.spring") version "2.3.10"
-    kotlin("plugin.jpa") version "2.3.10"
-    id("org.springframework.boot") version "4.0.3"
-    id("io.spring.dependency-management") version "1.1.7"
+    kotlin("jvm")
+    kotlin("kapt")
+    kotlin("plugin.spring") apply false
+    id("org.springframework.boot") apply false
+    id("io.spring.dependency-management")
+    id("org.jlleitschuh.gradle.ktlint") apply false
 }
 
-group = "com.uno"
-version = "0.0.1-SNAPSHOT"
-description = "toy-msa"
-
 allprojects {
+    val projectGroup: String by project
+    group = projectGroup
+    version = if (version == DEFAULT_VERSION) getGitHash() else version
+
     repositories {
         mavenCentral()
     }
+}
 
+subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.kapt")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "jacoco")
 
     java {
         toolchain {
@@ -37,7 +53,7 @@ allprojects {
     dependencyManagement {
         imports {
             mavenBom(
-                "org.springframework.cloud:spring-cloud-dependencies:2025.1.1",
+                "org.springframework.cloud:spring-cloud-dependencies:${project.properties["springCloudDependenciesVersion"]}",
             )
         }
     }
@@ -50,12 +66,60 @@ allprojects {
         implementation("org.springframework.boot:spring-boot-starter")
 
         // Test
-        testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+        testImplementation("com.ninja-squad:springmockk:${project.properties["springMockkVersion"]}")
+        testImplementation("org.mockito:mockito-core:${project.properties["mockitoVersion"]}")
+        testImplementation("org.instancio:instancio-junit:${project.properties["instancioJUnitVersion"]}")
+        testImplementation("com.tngtech.archunit:archunit-junit5:${project.properties["archunitJunit5Version"]}")
+
+        // Testcontainers
+        testImplementation("org.springframework.boot:spring-boot-testcontainers")
+        testImplementation("org.testcontainers:testcontainers")
+        testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+    }
+
+    tasks.withType(Jar::class) { enabled = true }
+    tasks.withType(BootJar::class) { enabled = false }
+
+    tasks.test {
+        maxParallelForks = 1
+        useJUnitPlatform()
+        systemProperty("user.timezone", "Asia/Seoul")
+        systemProperty("spring.profiles.active", "test")
+        jvmArgs("-Xshare:off")
+    }
+
+    tasks.withType<JacocoReport> {
+        mustRunAfter("test")
+        executionData(fileTree(layout.buildDirectory.asFile).include("jacoco/*.exec"))
+        reports {
+            xml.required = true
+            csv.required = false
+            html.required = false
+        }
+        afterEvaluate {
+            classDirectories.setFrom(
+                files(
+                    classDirectories.files.map {
+                        fileTree(it)
+                    },
+                ),
+            )
+        }
+    }
+
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set(properties["ktLintVersion"] as String)
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+configure(subprojects.filter { it.path.startsWith(":apps:") }) {
+    tasks.withType(Jar::class) { enabled = false }
+    tasks.withType(BootJar::class) { enabled = true }
 }
+
+project("apps") { tasks.configureEach { enabled = false } }
+project("modules") { tasks.configureEach { enabled = false } }
+project("supports") { tasks.configureEach { enabled = false } }

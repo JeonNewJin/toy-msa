@@ -1,4 +1,3 @@
 package com.uno.event
 
-interface EventPayload {
-}
+interface EventPayload

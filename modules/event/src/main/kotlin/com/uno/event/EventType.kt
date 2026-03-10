@@ -8,7 +8,8 @@ enum class EventType(
     val payloadClass: Class<out EventPayload>,
     val topic: String,
 ) {
-    ORDER_CREATED(OrderCreatedEventPayload::class.java, ORDER_CREATED_V1);
+    ORDER_CREATED(OrderCreatedEventPayload::class.java, ORDER_CREATED_V1),
+    ;
 
     companion object {
         private val log = LoggerFactory.getLogger(EventType::class.java)
