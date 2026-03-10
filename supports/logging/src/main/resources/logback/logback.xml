@@ -36,8 +36,8 @@
 
     <springProfile name="prd">
         <include resource="appenders/json-console-appender.xml"/>
-        <include resource="appenders/slack-appender.xml"/>
-        <include resource="properties/slack-log-prd.xml"/>
+<!--        <include resource="appenders/slack-appender.xml"/>-->
+<!--        <include resource="properties/slack-log-prd.xml"/>-->
         <logger name="com.uno" level="INFO"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>

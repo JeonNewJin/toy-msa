@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono
 
 @Component
 class AuthorizationHeaderFilter(
-    @Value($$"${token.secret}") private val secret: String,
+    @Value($$"${jwt.secret}") private val secret: String,
 ) : AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config>(Config::class.java) {
 
     private val log = LoggerFactory.getLogger(javaClass)

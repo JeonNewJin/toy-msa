@@ -7,9 +7,6 @@ GET {{toy-msa-api}}/user-service/welcome
 ###
 GET http://localhost:8082/actuator
 
-###
-POST http://localhost:8082/actuator/busrefresh
-
 ### 회원가입
 POST {{toy-msa-api}}/user-service/users
 Content-Type: application/json
@@ -31,7 +28,7 @@ Content-Type: application/json
 
 ### 사용자 조회
 GET {{toy-msa-api}}/user-service/users/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTljNzcxYS1mMGY3LTRhYmUtYTFiZS1lMTJiNDQ5MDJmMzMiLCJpYXQiOjE3NzMwNzk5NjcsImV4cCI6MTc3MzE2NjM2N30.J_er4fqVa3CZ0aSIQs3kMEzPXOJQurpcU4hd1qsbVh5Y8AChk5Bszcs8K7934DE2ZHZ50lRNNhKdqc2HSTutzA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxYzU5ODM5Ni0zZDJlLTQ4YTYtYjUwYS1kN2YwMWU3ZGNkZDkiLCJpYXQiOjE3NzMxNzY2NjgsImV4cCI6MTc3MzI2MzA2OH0.ACyTkH7_kOhGxKrJ4spUXxHP0oc-MBsg8KWlDoyGvpHhFFuclI8yaoda_iucxAl1zbqt1s7WqgYIIENPDh3dkQ
 
 ### 서킷브레이커 상태 확인
 POST http://localhost:8082/actuator/circuitbreakers

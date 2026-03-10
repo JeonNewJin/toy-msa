@@ -50,7 +50,9 @@ class WebSecurity(
                         AuthorizationDecision(
                             IpAddressMatcher("127.0.0.1").matches(request) ||
                             IpAddressMatcher("::1").matches(request) ||
-                            IpAddressMatcher("222.237.213.201").matches(request),
+                            IpAddressMatcher("222.237.213.201").matches(request) ||
+                            IpAddressMatcher("10.0.0.0/8").matches(request) ||
+                            IpAddressMatcher("192.168.0.0/16").matches(request),
                         )
                     }
             }

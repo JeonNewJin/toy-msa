@@ -11,15 +11,6 @@ server:
     keep-alive-timeout: 60s # 60s
   max-http-request-header-size: 8KB
 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
-
 grpc:
   server:
     port: 9091
@@ -37,8 +28,21 @@ spring:
       - logging.yml
       - monitoring.yml
 
+eureka:
+  client:
+    enabled: false
+
 ---
 spring.config.activate.on-profile: local, test
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
 
 spring:
   jpa:
@@ -63,3 +67,10 @@ spring.config.activate.on-profile: qa
 
 ---
 spring.config.activate.on-profile: prd
+
+spring:
+  jpa:
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

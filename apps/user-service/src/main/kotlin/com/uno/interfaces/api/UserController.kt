@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(
     private val env: Environment,
-    private val greeting: Greeting,
     private val userService: UserService,
 ) {
     @GetMapping("/health-check")
@@ -42,7 +41,7 @@ class UserController(
                     "," + request.requestURI +
                     "," + request.requestURL,
         )
-        return greeting.message
+        return "Welcome to the Simple E-commerce."
     }
 
     @PostMapping("/users")

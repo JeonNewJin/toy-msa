@@ -16,6 +16,9 @@ dependencies {
 
     // Spring Cloud
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation("org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer") {
+        exclude(group = "io.grpc")
+    }
 
     // Kafka
     implementation("org.springframework.kafka:spring-kafka")

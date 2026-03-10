@@ -15,7 +15,7 @@ datasource:
   mysql-jpa:
     main:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}
+      jdbc-url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/ecommerce
       username: ${MYSQL_USER}
       password: ${MYSQL_PWD}
       pool-name: mysql-main-pool
@@ -83,9 +83,7 @@ datasource:
 ---
 spring.config.activate.on-profile: prd
 
-datasource:
-  mysql-jpa:
-    main:
-      jdbc-url: jdbc:mysql://localhost:3306/ecommerce
-      username: application
-      password: application
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create

@@ -2,13 +2,10 @@ rootProject.name = "toy-msa"
 
 include(
     ":apps:service-discovery",
-    ":apps:config-service",
     ":apps:apigateway-service",
     ":apps:user-service",
     ":apps:order-service",
     ":apps:catalog-service",
-    ":apps:first-service",
-    ":apps:second-service",
     ":modules:data-serializer",
     ":modules:event",
     ":modules:jpa",
