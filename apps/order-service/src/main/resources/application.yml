@@ -20,6 +20,12 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
+grpc:
+  client:
+    catalog-service:
+      host: localhost
+      port: 9091
+
 spring:
   main:
     web-application-type: servlet
@@ -29,32 +35,12 @@ spring:
     active: local
   config:
     import:
+      - jpa.yml
       - logging.yml
       - monitoring.yml
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ecommerce
-    username: application
-    password: application
-  jpa:
-    open-in-view: false
-    generate-ddl: false
-    show-sql: false
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        default_batch_fetch_size: 100
-        timezone.default_storage: NORMALIZE_UTC
-        jdbc.time_zone: UTC
 
 ---
 spring.config.activate.on-profile: local, test
-
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
 
 management:
   server:

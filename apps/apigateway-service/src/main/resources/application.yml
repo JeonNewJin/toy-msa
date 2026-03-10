@@ -17,11 +17,11 @@ spring:
     import:
       - logging.yml
       - monitoring.yml
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
   cloud:
     gateway:
       server:
@@ -93,6 +93,10 @@ spring:
                     baseMessage: Hi, there.
                     preLogger: true
                     postLogger: true
+
+token:
+  secret: changed_my-very-long-secret-key-must-be-at-least-32-bytes-long-from-config-service
+  expiration_time: 86400000
 
 management:
   server:

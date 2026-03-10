@@ -12,6 +12,7 @@ include(
     ":modules:data-serializer",
     ":modules:event",
     ":modules:jpa",
+    ":modules:grpc",
     ":supports:logging",
     ":supports:monitoring",
 )

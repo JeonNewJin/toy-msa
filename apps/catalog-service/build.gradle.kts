@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":modules:jpa"))
     implementation(project(":supports:logging"))
     implementation(project(":supports:monitoring"))
+    implementation(project(":modules:grpc"))
 
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -18,4 +19,7 @@ dependencies {
 
     // Kafka
     implementation("org.springframework.kafka:spring-kafka")
+
+    // Test Fixtures
+    testImplementation(testFixtures(project(":modules:jpa")))
 }

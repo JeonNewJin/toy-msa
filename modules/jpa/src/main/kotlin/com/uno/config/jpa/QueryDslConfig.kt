@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Primary
 
 @Configuration
 class QueryDslConfig {
-
     @Primary
     @Bean
     fun mySqlJpaQueryFactory(entityManager: EntityManager): JPAQueryFactory =

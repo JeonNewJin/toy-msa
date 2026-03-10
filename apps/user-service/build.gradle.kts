@@ -19,9 +19,9 @@ dependencies {
 
     // Spring Cloud
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    implementation("org.springframework.cloud:spring-cloud-starter-config")
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
-    implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
+//    implementation("org.springframework.cloud:spring-cloud-starter-config")
+//    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+//    implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.github.openfeign:feign-micrometer")
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
@@ -30,4 +30,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+    // Test Fixtures
+    testImplementation(testFixtures(project(":modules:jpa")))
 }
