@@ -3,16 +3,15 @@ plugins {
 }
 
 dependencies {
+    // add-ons
+    implementation(project(":supports:logging"))
+    implementation(project(":supports:monitoring"))
+
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-zipkin")
-
-    //
-    implementation("io.github.openfeign:feign-micrometer")
 
     // Spring
     implementation("org.springframework.retry:spring-retry")
@@ -24,6 +23,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
     implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("io.github.openfeign:feign-micrometer")
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
 
     // JWT

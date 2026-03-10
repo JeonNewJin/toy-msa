@@ -64,12 +64,6 @@ services:
       KAFKA_CLUSTERS_0_NAME: local # kafka-ui에서 보이는 클러스터명
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092 # kafka-ui가 연결할 브로커 주소
 
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: zipkin
-    ports:
-      - "9411:9411"
-
 volumes:
   mysql-8-data:
   kafka-data:

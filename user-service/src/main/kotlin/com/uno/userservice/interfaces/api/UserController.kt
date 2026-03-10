@@ -1,6 +1,7 @@
 package com.uno.userservice.interfaces.api
 
 import com.uno.userservice.domain.UserService
+import io.micrometer.core.annotation.Timed
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus.CREATED
@@ -14,6 +15,7 @@ class UserController(
     private val userService: UserService
 ) {
     @GetMapping("/health-check")
+    @Timed(value = "users.status", longTask = true)
     fun status(): String =
         String.format(
             "It's Working in User Service"
@@ -26,6 +28,7 @@ class UserController(
         )
 
     @GetMapping("/welcome")
+    @Timed(value = "users.welcome", longTask = true)
     fun welcome(
         request: HttpServletRequest,
     ): String {

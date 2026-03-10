@@ -1,6 +1,7 @@
 dependencies {
-    // Spring Boot
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // add-ons
+    implementation(project(":supports:logging"))
+    implementation(project(":supports:monitoring"))
 
     // Spring Cloud
     implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webflux")

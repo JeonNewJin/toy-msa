@@ -1,24 +1,15 @@
 server:
-  port: 20000
-
-spring:
-  application:
-    name: catalog-service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ecommerce
-    username: application
-    password: application
-  sql:
-    init:
-      mode: always
-  jpa:
-    open-in-view: false
-    show-sql: true
-    generate-ddl: true
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: create
+  port: 0
+  shutdown: graceful
+  tomcat:
+    threads:
+      max: 200 # 최대 워커 스레드 수 (default : 200)
+      min-spare: 10 # 최소 유지 스레드 수 (default : 10)
+    connection-timeout: 1m # 연결 타임아웃 (ms) (default : 60000ms = 1m)
+    max-connections: 8192 # 최대 동시 연결 수 (default : 8192)
+    accept-count: 100 # 대기 큐 크기 (default : 100)
+    keep-alive-timeout: 60s # 60s
+  max-http-request-header-size: 8KB
 
 eureka:
   instance:
@@ -28,3 +19,56 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+
+spring:
+  main:
+    web-application-type: servlet
+  application:
+    name: catalog-service
+  profiles:
+    active: local
+  config:
+    import:
+      - logging.yml
+      - monitoring.yml
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecommerce
+    username: application
+    password: application
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        timezone.default_storage: NORMALIZE_UTC
+        jdbc.time_zone: UTC
+
+---
+spring.config.activate.on-profile: local, test
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+
+management:
+  server:
+    port: 8084
+
+---
+spring.config.activate.on-profile: dev
+
+---
+spring.config.activate.on-profile: qa
+
+---
+spring.config.activate.on-profile: prd

@@ -1,17 +1,14 @@
 ###
-#GET {{toy-msa-api}}/user-service/health-check
-GET http://localhost:60000/health-check
+GET {{toy-msa-api}}/user-service/health-check
 
 ###
-GET http://localhost:60000/actuator
+GET {{toy-msa-api}}/user-service/welcome
 
 ###
-#POST http://localhost:60000/actuator/busrefresh
-POST {{toy-msa-api}}/user-service/actuator/busrefresh
+GET http://localhost:8082/actuator
 
 ###
-#GET {{toy-msa-api}}/user-service/welcome
-GET http://localhost:60000/welcome
+POST http://localhost:8082/actuator/busrefresh
 
 ### 회원가입
 POST {{toy-msa-api}}/user-service/users
@@ -37,4 +34,8 @@ GET {{toy-msa-api}}/user-service/users/1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMTljNzcxYS1mMGY3LTRhYmUtYTFiZS1lMTJiNDQ5MDJmMzMiLCJpYXQiOjE3NzMwNzk5NjcsImV4cCI6MTc3MzE2NjM2N30.J_er4fqVa3CZ0aSIQs3kMEzPXOJQurpcU4hd1qsbVh5Y8AChk5Bszcs8K7934DE2ZHZ50lRNNhKdqc2HSTutzA
 
 ### 서킷브레이커 상태 확인
-GET http://localhost:60000/actuator/circuitbreakers
+POST http://localhost:8082/actuator/circuitbreakers
+
+###
+GET http://localhost:8082/actuator/circuitbreakerevents
+
