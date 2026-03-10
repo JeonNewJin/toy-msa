@@ -9,6 +9,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-zipkin")
+
+    //
+    implementation("io.github.openfeign:feign-micrometer")
+
+    // Spring
     implementation("org.springframework.retry:spring-retry")
     implementation("org.springframework:spring-aspects")
 

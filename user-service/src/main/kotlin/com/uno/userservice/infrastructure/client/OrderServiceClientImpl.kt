@@ -16,8 +16,9 @@ class OrderServiceClientImpl(
     @Bulkhead(name = "order-service")
     @Retry(name = "order-service")
     @CircuitBreaker(name = "order-service", fallbackMethod = "getOrdersFallback")
-    override fun getOrders(userId: String): List<OrderServiceClient.Response> =
-        orderServiceFeignClient.getOrders(userId).map {
+    override fun getOrders(userId: String): List<OrderServiceClient.Response> {
+        log.info("before calling orders microservice")
+        val orders = orderServiceFeignClient.getOrders(userId).map {
             OrderServiceClient.Response(
                 orderId = it.orderId,
                 productId = it.productId,
@@ -26,6 +27,9 @@ class OrderServiceClientImpl(
                 totalAmount = it.totalAmount,
             )
         }
+        log.info("after calling the orders microservice")
+        return orders
+    }
 
     private fun getOrdersFallback(userId: String, e: Exception): List<OrderServiceClient.Response> {
         log.error("[OrderServiceClientImpl.getOrdersFallback] userId={}", userId, e)
