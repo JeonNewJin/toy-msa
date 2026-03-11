@@ -2,9 +2,11 @@
 <configuration>
     <springProfile name="local,local-dev,test">
         <include resource="appenders/plain-console-appender.xml"/>
+        <include resource="appenders/logstash-tcp-appender.xml"/>
         <logger name="com.uno" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC-LOGSTASH"/>
         </root>
     </springProfile>
 
@@ -36,11 +38,13 @@
 
     <springProfile name="prd">
         <include resource="appenders/json-console-appender.xml"/>
+        <include resource="appenders/logstash-tcp-appender.xml"/>
 <!--        <include resource="appenders/slack-appender.xml"/>-->
 <!--        <include resource="properties/slack-log-prd.xml"/>-->
         <logger name="com.uno" level="INFO"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC-LOGSTASH"/>
             <!-- /properties.slack-log-prd.xml 설정 후 활성화
             <appender-ref ref="ASYNC-SLACK"/>
              -->

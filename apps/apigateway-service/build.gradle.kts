@@ -15,4 +15,5 @@ dependencies {
 
     // Netty
     runtimeOnly("io.netty:netty-all")
+    runtimeOnly("io.grpc:grpc-netty:1.76.0")
 }

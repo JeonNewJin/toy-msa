@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-env
+  namespace: toy-msa
+data:
+  ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
+  LOGSTASH_HOST: logstash
+  LOGSTASH_PORT: "5044"

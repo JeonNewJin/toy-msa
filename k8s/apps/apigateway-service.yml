@@ -24,6 +24,9 @@ spec:
               containerPort: 8000
             - name: management
               containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: common-env
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prd
@@ -32,8 +35,6 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: jwt-secret
-            - name: ZIPKIN_ENDPOINT
-              value: http://zipkin:9411/api/v2/spans
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<included>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOGSTASH_HOST:-localhost}:${LOGSTASH_PORT:-5044}</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"service":"${APPLICATION_NAME:-unknown}"}</customFields>
+        </encoder>
+        <reconnectionDelay>5 seconds</reconnectionDelay>
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+    </appender>
+
+    <appender name="ASYNC-LOGSTASH" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="LOGSTASH"/>
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+</included>

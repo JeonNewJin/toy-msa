@@ -26,6 +26,9 @@ spec:
               containerPort: 8081
             - name: grpc
               containerPort: 9091
+          envFrom:
+            - configMapRef:
+                name: common-env
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prd
@@ -49,8 +52,6 @@ spec:
                   key: mysql-password
             - name: BOOTSTRAP_SERVERS
               value: kafka-0.kafka.toy-msa.svc.cluster.local:9092
-            - name: ZIPKIN_ENDPOINT
-              value: http://zipkin:9411/api/v2/spans
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness

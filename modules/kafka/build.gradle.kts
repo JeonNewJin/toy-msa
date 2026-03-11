@@ -13,6 +13,7 @@ dependencies {
 
     // Test
     testImplementation("org.springframework.kafka:spring-kafka-test")
-    testImplementation("org.testcontainers:kafka")
-    testFixturesImplementation("org.testcontainers:kafka")
+    testImplementation("org.testcontainers:testcontainers-kafka")
+    testFixturesImplementation(platform("org.springframework.boot:spring-boot-dependencies:${project.properties["springBootVersion"]}"))
+    testFixturesImplementation("org.testcontainers:testcontainers-kafka")
 }
