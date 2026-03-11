@@ -23,10 +23,11 @@ spring:
   application:
     name: order-service
   profiles:
-    active: local
+    default: local
   config:
     import:
       - jpa.yml
+      - kafka.yml
       - logging.yml
       - monitoring.yml
 
@@ -41,6 +42,7 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
+    enabled: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
     fetch-registry: true

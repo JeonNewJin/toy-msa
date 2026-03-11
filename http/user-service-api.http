@@ -31,7 +31,7 @@ GET {{toy-msa-api}}/user-service/users/1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxYzU5ODM5Ni0zZDJlLTQ4YTYtYjUwYS1kN2YwMWU3ZGNkZDkiLCJpYXQiOjE3NzMxNzY2NjgsImV4cCI6MTc3MzI2MzA2OH0.ACyTkH7_kOhGxKrJ4spUXxHP0oc-MBsg8KWlDoyGvpHhFFuclI8yaoda_iucxAl1zbqt1s7WqgYIIENPDh3dkQ
 
 ### 서킷브레이커 상태 확인
-POST http://localhost:8082/actuator/circuitbreakers
+GET http://localhost:8082/actuator/circuitbreakers
 
 ###
 GET http://localhost:8082/actuator/circuitbreakerevents

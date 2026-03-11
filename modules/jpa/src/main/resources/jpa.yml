@@ -37,7 +37,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-#      ddl-auto: none
 
 datasource:
   mysql-jpa:
@@ -84,6 +83,5 @@ datasource:
 spring.config.activate.on-profile: prd
 
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
+  flyway:
+    enabled: true

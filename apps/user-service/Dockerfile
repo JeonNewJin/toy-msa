@@ -1,4 +1,9 @@
+FROM eclipse-temurin:25-jdk AS builder
+WORKDIR /workspace
+COPY . .
+RUN ./gradlew :apps:user-service:bootJar -x test --no-daemon
+
 FROM eclipse-temurin:25-jre
 WORKDIR /app
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY --from=builder /workspace/apps/user-service/build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]

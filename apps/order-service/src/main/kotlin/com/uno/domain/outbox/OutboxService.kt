@@ -20,6 +20,7 @@ class OutboxService(
         val outbox = outboxRepository.findByEventId(eventId)
             ?: throw IllegalArgumentException("[eventId = $eventId] Outbox를 찾을 수 없습니다.")
         outbox.published()
+        outboxRepository.save(outbox)
     }
 
     @Transactional
@@ -27,6 +28,7 @@ class OutboxService(
         val outbox = outboxRepository.findByEventId(eventId)
             ?: throw IllegalArgumentException("[eventId = $eventId] Outbox를 찾을 수 없습니다.")
         outbox.failed()
+        outboxRepository.save(outbox)
     }
 
     fun findRetryTargets(createdAtBefore: LocalDateTime): List<Outbox> =

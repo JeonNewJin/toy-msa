@@ -6,6 +6,7 @@ dependencies {
     // add-ons
     implementation(project(":modules:event"))
     implementation(project(":modules:jpa"))
+    implementation(project(":modules:kafka"))
     implementation(project(":supports:logging"))
     implementation(project(":supports:monitoring"))
     implementation(project(":modules:grpc"))
@@ -16,12 +17,7 @@ dependencies {
 
     // Spring Cloud
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    implementation("org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer") {
-        exclude(group = "io.grpc")
-    }
-
-    // Kafka
-    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer")
 
     // Test Fixtures
     testImplementation(testFixtures(project(":modules:jpa")))

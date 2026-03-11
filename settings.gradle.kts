@@ -9,6 +9,7 @@ include(
     ":modules:data-serializer",
     ":modules:event",
     ":modules:jpa",
+    ":modules:kafka",
     ":modules:grpc",
     ":supports:logging",
     ":supports:monitoring",
