@@ -154,21 +154,23 @@ jobs:
 
       - name: Update image tags in manifests
         run: |
-          # 변경된 서비스의 이미지 태그만 업데이트
-          if [[ "${{ needs.detect-changes.outputs.apigateway }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/apigateway-service:.*|${{ env.IMAGE_PREFIX }}/apigateway-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
+          SHA="${{ github.event.workflow_run.head_sha || github.sha }}"
+          DISPATCH="${{ github.event_name == 'workflow_dispatch' }}"
+
+          if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.apigateway }}" == "true" ]]; then
+            sed -i "s|${{ env.IMAGE_PREFIX }}/apigateway-service:.*|${{ env.IMAGE_PREFIX }}/apigateway-service:${SHA}|g" \
               apps/apigateway-service.yml
           fi
-          if [[ "${{ needs.detect-changes.outputs.user }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/user-service:.*|${{ env.IMAGE_PREFIX }}/user-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
+          if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.user }}" == "true" ]]; then
+            sed -i "s|${{ env.IMAGE_PREFIX }}/user-service:.*|${{ env.IMAGE_PREFIX }}/user-service:${SHA}|g" \
               apps/user-service.yml
           fi
-          if [[ "${{ needs.detect-changes.outputs.order }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/order-service:.*|${{ env.IMAGE_PREFIX }}/order-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
+          if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.order }}" == "true" ]]; then
+            sed -i "s|${{ env.IMAGE_PREFIX }}/order-service:.*|${{ env.IMAGE_PREFIX }}/order-service:${SHA}|g" \
               apps/order-service.yml
           fi
-          if [[ "${{ needs.detect-changes.outputs.catalog }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/catalog-service:.*|${{ env.IMAGE_PREFIX }}/catalog-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
+          if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.catalog }}" == "true" ]]; then
+            sed -i "s|${{ env.IMAGE_PREFIX }}/catalog-service:.*|${{ env.IMAGE_PREFIX }}/catalog-service:${SHA}|g" \
               apps/catalog-service.yml
           fi
 
