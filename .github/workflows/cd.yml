@@ -1,8 +1,11 @@
 name: CD
 
 on:
-  push:
+  workflow_run:
+    workflows: [ "CI" ]
+    types: [ completed ]
     branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: write  # 매니페스트 변경 후 git push를 위해 write 필요
@@ -21,6 +24,7 @@ jobs:
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     outputs:
       apigateway: ${{ steps.filter.outputs.apigateway }}
       user: ${{ steps.filter.outputs.user }}
@@ -31,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Detect changed paths
         uses: dorny/paths-filter@v3
@@ -69,7 +75,8 @@ jobs:
       - name: Check any changes
         id: check
         run: |
-          if [[ "${{ steps.filter.outputs.apigateway }}" == "true" || \
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" || \
+                "${{ steps.filter.outputs.apigateway }}" == "true" || \
                 "${{ steps.filter.outputs.user }}" == "true" || \
                 "${{ steps.filter.outputs.order }}" == "true" || \
                 "${{ steps.filter.outputs.catalog }}" == "true" ]]; then
@@ -88,13 +95,13 @@ jobs:
       matrix:
         include:
           - service: apigateway-service
-            changed: ${{ needs.detect-changes.outputs.apigateway }}
+            changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.apigateway }}
           - service: user-service
-            changed: ${{ needs.detect-changes.outputs.user }}
+            changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.user }}
           - service: order-service
-            changed: ${{ needs.detect-changes.outputs.order }}
+            changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.order }}
           - service: catalog-service
-            changed: ${{ needs.detect-changes.outputs.catalog }}
+            changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.catalog }}
 
     steps:
       - name: Skip if unchanged
@@ -104,6 +111,8 @@ jobs:
       - name: Checkout
         if: matrix.changed == 'true'
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Set up Docker Buildx
         if: matrix.changed == 'true'
@@ -125,7 +134,7 @@ jobs:
           file: apps/${{ matrix.service }}/Dockerfile
           push: true
           tags: |
-            ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:${{ github.sha }}
+            ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:${{ github.event.workflow_run.head_sha || github.sha }}
             ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:latest
           cache-from: type=gha,scope=${{ matrix.service }}
           cache-to: type=gha,mode=max,scope=${{ matrix.service }}
@@ -147,19 +156,19 @@ jobs:
         run: |
           # 변경된 서비스의 이미지 태그만 업데이트
           if [[ "${{ needs.detect-changes.outputs.apigateway }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/apigateway-service:.*|${{ env.IMAGE_PREFIX }}/apigateway-service:${{ github.sha }}|g" \
+            sed -i "s|${{ env.IMAGE_PREFIX }}/apigateway-service:.*|${{ env.IMAGE_PREFIX }}/apigateway-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
               apps/apigateway-service.yml
           fi
           if [[ "${{ needs.detect-changes.outputs.user }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/user-service:.*|${{ env.IMAGE_PREFIX }}/user-service:${{ github.sha }}|g" \
+            sed -i "s|${{ env.IMAGE_PREFIX }}/user-service:.*|${{ env.IMAGE_PREFIX }}/user-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
               apps/user-service.yml
           fi
           if [[ "${{ needs.detect-changes.outputs.order }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/order-service:.*|${{ env.IMAGE_PREFIX }}/order-service:${{ github.sha }}|g" \
+            sed -i "s|${{ env.IMAGE_PREFIX }}/order-service:.*|${{ env.IMAGE_PREFIX }}/order-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
               apps/order-service.yml
           fi
           if [[ "${{ needs.detect-changes.outputs.catalog }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/catalog-service:.*|${{ env.IMAGE_PREFIX }}/catalog-service:${{ github.sha }}|g" \
+            sed -i "s|${{ env.IMAGE_PREFIX }}/catalog-service:.*|${{ env.IMAGE_PREFIX }}/catalog-service:${{ github.event.workflow_run.head_sha || github.sha }}|g" \
               apps/catalog-service.yml
           fi
 
@@ -168,5 +177,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add apps/
-          git diff --staged --quiet || git commit -m "chore: update image tags to ${{ github.sha }}"
+          git diff --staged --quiet || git commit -m "chore: update image tags to ${{ github.event.workflow_run.head_sha || github.sha }}"
           git push
