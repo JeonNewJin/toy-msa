@@ -89,7 +89,7 @@ jobs:
     name: Build & Push (${{ matrix.service }})
     needs: detect-changes
     if: needs.detect-changes.outputs.any_changed == 'true'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -132,7 +132,6 @@ jobs:
         with:
           context: .
           file: apps/${{ matrix.service }}/Dockerfile
-          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ env.IMAGE_PREFIX }}/${{ matrix.service }}:${{ github.event.workflow_run.head_sha || github.sha }}
