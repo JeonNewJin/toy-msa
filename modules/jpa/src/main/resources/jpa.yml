@@ -84,4 +84,4 @@ spring.config.activate.on-profile: prd
 
 spring:
   flyway:
-    enabled: true
+    enabled: false

@@ -15,10 +15,6 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     testRuntimeOnly("com.mysql:mysql-connector-j")
 
-    // Flyway
-    implementation("org.flywaydb:flyway-core")
-    implementation("org.flywaydb:flyway-mysql")
-
     // Test
     testImplementation("org.testcontainers:testcontainers-mysql")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
