@@ -85,3 +85,6 @@ spring.config.activate.on-profile: prd
 spring:
   flyway:
     enabled: true
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/ecommerce
+    user: ${MYSQL_USER}
+    password: ${MYSQL_PWD}
