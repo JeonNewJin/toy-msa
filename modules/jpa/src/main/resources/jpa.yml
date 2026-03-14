@@ -81,7 +81,3 @@ datasource:
 
 ---
 spring.config.activate.on-profile: prd
-
-spring:
-  flyway:
-    enabled: false

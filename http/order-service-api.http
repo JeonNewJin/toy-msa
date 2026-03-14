@@ -19,7 +19,7 @@ Content-Type: application/json
   "productId": "CATALOG-001",
   "quantity": 10,
   "unitPrice": 1500,
-  "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
+  "userId": "6911231f-1d39-4dbe-b6d7-28dd14b42741"
 }
 
 ### 주문 생성
@@ -30,8 +30,8 @@ Content-Type: application/json
   "productId": "CATALOG-002",
   "quantity": 20,
   "unitPrice": 1000,
-  "userId": "9c2017e0-bee1-485f-96c8-eaea9cb2d394"
+  "userId": "6911231f-1d39-4dbe-b6d7-28dd14b42741"
 }
 
 ### 주문 내역 조회
-GET {{toy-msa-api}}/order-service/orders?userId=9c2017e0-bee1-485f-96c8-eaea9cb2d394
+GET {{toy-msa-api}}/order-service/orders?userId=6911231f-1d39-4dbe-b6d7-28dd14b42741

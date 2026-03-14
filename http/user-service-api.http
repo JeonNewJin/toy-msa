@@ -28,11 +28,10 @@ Content-Type: application/json
 
 ### 사용자 조회
 GET {{toy-msa-api}}/user-service/users/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjNmNhNzNiNy0yNWEzLTQ4N2EtYTg3Yy0wODhmMTBkMjljZTUiLCJpYXQiOjE3NzMzMjkxNzksImV4cCI6MTc3MzQxNTU3OX0.TFZ35gvcMewtlFH_5B-gXmNqTCOuXH9AioERLRKTJr4wjEZigJ2zi242m_V9H88YXDqcLU-aV1g-P0IV5ww_uQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2OTExMjMxZi0xZDM5LTRkYmUtYjZkNy0yOGRkMTRiNDI3NDEiLCJpYXQiOjE3NzM0ODY4MzksImV4cCI6MTc3MzU3MzIzOX0.fY3lZGd4bhxFDFOiZpCI2_lFjAAF-yu2fAIDG0coyjVtd3LG2bjWQTgOcf6PP4c4WP-lP50mTW7vBVLGNAlDVw
 
 ### 서킷브레이커 상태 확인
 GET http://localhost:8082/actuator/circuitbreakers
 
 ###
 GET http://localhost:8082/actuator/circuitbreakerevents
-
