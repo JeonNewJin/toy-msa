@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     outputs:
-      apigateway: ${{ steps.filter.outputs.apigateway }}
       user: ${{ steps.filter.outputs.user }}
       order: ${{ steps.filter.outputs.order }}
       catalog: ${{ steps.filter.outputs.catalog }}
@@ -43,13 +42,6 @@ jobs:
         id: filter
         with:
           filters: |
-            apigateway:
-              - 'apps/apigateway-service/**'
-              - 'modules/**'
-              - 'supports/**'
-              - 'build.gradle.kts'
-              - 'settings.gradle.kts'
-              - 'gradle.properties'
             user:
               - 'apps/user-service/**'
               - 'modules/**'
@@ -76,7 +68,6 @@ jobs:
         id: check
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" || \
-                "${{ steps.filter.outputs.apigateway }}" == "true" || \
                 "${{ steps.filter.outputs.user }}" == "true" || \
                 "${{ steps.filter.outputs.order }}" == "true" || \
                 "${{ steps.filter.outputs.catalog }}" == "true" ]]; then
@@ -94,8 +85,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - service: apigateway-service
-            changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.apigateway }}
           - service: user-service
             changed: ${{ github.event_name == 'workflow_dispatch' || needs.detect-changes.outputs.user }}
           - service: order-service
@@ -157,21 +146,17 @@ jobs:
           SHA="${{ github.event.workflow_run.head_sha || github.sha }}"
           DISPATCH="${{ github.event_name == 'workflow_dispatch' }}"
 
-          if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.apigateway }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/apigateway-service:.*|${{ env.IMAGE_PREFIX }}/apigateway-service:${SHA}|g" \
-              apps/apigateway-service.yml
-          fi
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.user }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/user-service:.*|${{ env.IMAGE_PREFIX }}/user-service:${SHA}|g" \
-              apps/user-service.yml
+            sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
+              apps/user-service/ci/values.yaml
           fi
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.order }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/order-service:.*|${{ env.IMAGE_PREFIX }}/order-service:${SHA}|g" \
-              apps/order-service.yml
+            sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
+              apps/order-service/ci/values.yaml
           fi
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.catalog }}" == "true" ]]; then
-            sed -i "s|${{ env.IMAGE_PREFIX }}/catalog-service:.*|${{ env.IMAGE_PREFIX }}/catalog-service:${SHA}|g" \
-              apps/catalog-service.yml
+            sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
+              apps/catalog-service/ci/values.yaml
           fi
 
       - name: Commit and push manifest changes
