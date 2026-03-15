@@ -148,15 +148,15 @@ jobs:
 
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.user }}" == "true" ]]; then
             sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
-              apps/user-service/ci/values.yaml
+              apps/user-service/values-prd.yaml
           fi
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.order }}" == "true" ]]; then
             sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
-              apps/order-service/ci/values.yaml
+              apps/order-service/values-prd.yaml
           fi
           if [[ "$DISPATCH" == "true" || "${{ needs.detect-changes.outputs.catalog }}" == "true" ]]; then
             sed -i "s|tag:.*|tag: \"${SHA}\"|g" \
-              apps/catalog-service/ci/values.yaml
+              apps/catalog-service/values-prd.yaml
           fi
 
       - name: Commit and push manifest changes
